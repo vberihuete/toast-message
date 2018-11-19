@@ -12,6 +12,9 @@
 		9FE95DB921A041DA00E19DA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FE95DB721A041DA00E19DA1 /* Main.storyboard */; };
 		9FE95DBB21A041DE00E19DA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FE95DBA21A041DE00E19DA1 /* Assets.xcassets */; };
 		9FE95DBE21A041DE00E19DA1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FE95DBC21A041DE00E19DA1 /* LaunchScreen.storyboard */; };
+		9FE95DC721A044EA00E19DA1 /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE95DC621A044EA00E19DA1 /* ToastMessage.swift */; };
+		9FE95DC921A0450200E19DA1 /* ToastMessage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FE95DC821A0450200E19DA1 /* ToastMessage.xib */; };
+		9FE95DCC21A07BDB00E19DA1 /* ToastPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE95DCB21A07BDB00E19DA1 /* ToastPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		9FE95DBA21A041DE00E19DA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9FE95DBD21A041DE00E19DA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9FE95DBF21A041DE00E19DA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9FE95DC621A044EA00E19DA1 /* ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessage.swift; sourceTree = "<group>"; };
+		9FE95DC821A0450200E19DA1 /* ToastMessage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToastMessage.xib; sourceTree = "<group>"; };
+		9FE95DCB21A07BDB00E19DA1 /* ToastPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +60,8 @@
 		9FE95DB221A041DA00E19DA1 /* ToastView */ = {
 			isa = PBXGroup;
 			children = (
+				9FE95DCA21A07BC500E19DA1 /* presenter */,
+				9FE95DC521A044BB00E19DA1 /* view */,
 				9FE95DB321A041DA00E19DA1 /* AppDelegate.swift */,
 				9FE95DB521A041DA00E19DA1 /* ViewController.swift */,
 				9FE95DB721A041DA00E19DA1 /* Main.storyboard */,
@@ -62,6 +70,23 @@
 				9FE95DBF21A041DE00E19DA1 /* Info.plist */,
 			);
 			path = ToastView;
+			sourceTree = "<group>";
+		};
+		9FE95DC521A044BB00E19DA1 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				9FE95DC621A044EA00E19DA1 /* ToastMessage.swift */,
+				9FE95DC821A0450200E19DA1 /* ToastMessage.xib */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		9FE95DCA21A07BC500E19DA1 /* presenter */ = {
+			isa = PBXGroup;
+			children = (
+				9FE95DCB21A07BDB00E19DA1 /* ToastPresenter.swift */,
+			);
+			path = presenter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -123,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FE95DBE21A041DE00E19DA1 /* LaunchScreen.storyboard in Resources */,
+				9FE95DC921A0450200E19DA1 /* ToastMessage.xib in Resources */,
 				9FE95DBB21A041DE00E19DA1 /* Assets.xcassets in Resources */,
 				9FE95DB921A041DA00E19DA1 /* Main.storyboard in Resources */,
 			);
@@ -136,6 +162,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FE95DB621A041DA00E19DA1 /* ViewController.swift in Sources */,
+				9FE95DC721A044EA00E19DA1 /* ToastMessage.swift in Sources */,
+				9FE95DCC21A07BDB00E19DA1 /* ToastPresenter.swift in Sources */,
 				9FE95DB421A041DA00E19DA1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,6 +311,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TSAUHSF6TJ;
 				INFOPLIST_FILE = ToastView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -300,6 +329,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TSAUHSF6TJ;
 				INFOPLIST_FILE = ToastView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
