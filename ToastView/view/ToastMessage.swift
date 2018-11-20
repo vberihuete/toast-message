@@ -19,6 +19,7 @@ class ToastMessage: UIView {
     var color = UIColor.black
     var message: String?
     var iconImage: UIImage?
+    var timeOut: Double?
     
     private var touchDismiss = true
     
@@ -33,11 +34,12 @@ class ToastMessage: UIView {
         
     }
     
-    init(backgroundColor color: UIColor = .black, message: String, icon: UIImage?) {
+    init(backgroundColor color: UIColor = .black, message: String, icon: UIImage?, timeOut: Double? = nil) {
         super.init(frame: CGRect.zero)
         self.color = color
         self.message = message
         self.iconImage = icon
+        self.timeOut = timeOut
         setup()
     }
     
@@ -52,6 +54,12 @@ class ToastMessage: UIView {
         //set
         containerView.backgroundColor = color
         messageLabel.text = message
+        
+        if let timeOut = self.timeOut{
+            DispatchQueue.main.asyncAfter(deadline: .now() + timeOut) {
+                ToastPresenter.shared.remove()
+            }
+        }
         
         guard let image = iconImage else {
             imageView.isHidden = true
@@ -69,6 +77,7 @@ class ToastMessage: UIView {
         self.isUserInteractionEnabled = false
         UIView.animate(withDuration: animated ? 0.2 : 0, animations: {
             self.alpha = 0
+            self.center.y += 10
         }, completion: { (_) in
             self.isUserInteractionEnabled = true
             handler()

@@ -17,9 +17,9 @@ class ToastPresenter {
     
     private var currentToast: ToastMessage?
     
-    func show(in view: UIView, message: String, icon: UIImage? = nil, with size: (width: CGFloat, height: CGFloat) = (200, 50), place toastPlace: ToastPlace = .down, animated: Bool = true, backgroundColor: UIColor = .black, autoDismiss: Bool = true){
+    func show(in view: UIView, message: String, icon: UIImage? = nil, with size: (width: CGFloat, height: CGFloat) = (200, 50), place toastPlace: ToastPlace = .down, animated: Bool = true, backgroundColor: UIColor = .black, timeOut: Double? = nil){
 
-        let toast = ToastMessage(backgroundColor: backgroundColor, message: message, icon: icon)
+        let toast = ToastMessage(backgroundColor: backgroundColor, message: message, icon: icon, timeOut: timeOut)
         toast.alpha = animated ? 0 : 1
 //        toast.tag = toasts.count
 //        toasts.append(toast)
