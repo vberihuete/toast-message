@@ -56,7 +56,10 @@ class ToastMessage: UIView {
         messageLabel.text = message
         
         if let timeOut = self.timeOut{
-            DispatchQueue.main.asyncAfter(deadline: .now() + timeOut) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + timeOut) { [weak self] in
+                guard self != nil else {
+                    return
+                }
                 ToastPresenter.shared.remove()
             }
         }
