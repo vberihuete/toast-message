@@ -33,8 +33,8 @@ class ToastMessage: UIView {
         
     }
     
-    init(frame: CGRect, backgroundColor color: UIColor = .black, message: String, icon: UIImage?) {
-        super.init(frame: frame)
+    init(backgroundColor color: UIColor = .black, message: String, icon: UIImage?) {
+        super.init(frame: CGRect.zero)
         self.color = color
         self.message = message
         self.iconImage = icon
@@ -74,6 +74,28 @@ class ToastMessage: UIView {
             handler()
             self.removeFromSuperview()
         })
+    }
+    
+    
+    /// Assigns auto layout anchor constraints with the given parameters based on the toast place
+    ///
+    /// - Parameters:
+    ///   - view: The view to constraint against
+    ///   - toastPlace: the place where the toast is being constrained
+    ///   - size: the size of the desired constraints
+    func constraint(in view: UIView, place toastPlace: ToastPlace, with size: (width: CGFloat, height: CGFloat)){
+        layer.masksToBounds = true
+        layer.cornerRadius = size.width / 8
+        translatesAutoresizingMaskIntoConstraints = false
+        widthAnchor.constraint(equalToConstant: size.width).isActive = true
+        heightAnchor.constraint(equalToConstant: size.height).isActive = true
+        centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        if toastPlace == .down{
+            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: size.height * -1).isActive = true
+        }else if toastPlace == .up{
+            topAnchor.constraint(equalTo: view.topAnchor, constant: size.height).isActive = true
+        }
+        
     }
     
     /// Touches began function

@@ -18,34 +18,27 @@ class ToastPresenter {
     private var currentToast: ToastMessage?
     
     func show(in view: UIView, message: String, icon: UIImage? = nil, with size: (width: CGFloat, height: CGFloat) = (200, 50), place toastPlace: ToastPlace = .down, animated: Bool = true, backgroundColor: UIColor = .black, autoDismiss: Bool = true){
-        let safeInsets = view.safeAreaInsets
-        
-        var x: CGFloat = view.frame.size.width / 2 - (size.width / 2)
-        var y: CGFloat = 0
-        
-        switch toastPlace {
-        case .up:
-            y = safeInsets.top + (size.height * 2)
-        default:
-            x = view.frame.size.width / 2 - (size.width / 2)
-            y = view.frame.size.height - safeInsets.bottom - (size.height * 2)
-        }
-        
-        let toast = ToastMessage(frame: CGRect(x: x, y: y, width: size.width, height: size.height), backgroundColor: backgroundColor, message: message, icon: icon)
+
+        let toast = ToastMessage(backgroundColor: backgroundColor, message: message, icon: icon)
         toast.alpha = animated ? 0 : 1
 //        toast.tag = toasts.count
 //        toasts.append(toast)
-        currentToast?.dismiss(){
-            self.currentToast = toast
-            view.addSubview(toast)
-            
-            if animated {
-                UIView.animate(withDuration: 0.2) {
-                    toast.alpha = 1
-                }
+        if let currentToast = currentToast{
+            currentToast.dismiss {
+                self.add(toast, to: view, animated: animated)
+                toast.constraint(in: view, place: toastPlace, with: size)
+                self.slide(up: toast)
             }
+        }else{
+            self.add(toast, to: view, animated: animated)
+            toast.constraint(in: view, place: toastPlace, with: size)
+            slide(up: toast)
         }
         
+//        toast.widthAnchor.constraint(equalToConstant: size.width).isActive = true
+//        toast.heightAnchor.constraint(equalToConstant: size.height).isActive = true
+//        toast.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        toast.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: size.height * -1).isActive = true
     }
     
     
@@ -55,6 +48,24 @@ class ToastPresenter {
         currentToast = nil
         
     }
+    
+    private func add(_ toast: ToastMessage, to view: UIView, animated: Bool){
+        self.currentToast = toast
+        view.addSubview(toast)
+        
+//        if animated {
+//            UIView.animate(withDuration: 0.2) {
+//                toast.alpha = 1
+//            }
+//        }
+    }
+    
+    private func slide(up view: UIView){
+        UIView.animate(withDuration: 0.2){
+            view.alpha = 1
+            view.center.y -= 10
+        }
+    }
 }
 
 enum ToastPlace{
@@ -62,4 +73,11 @@ enum ToastPlace{
     case down
 //    case right
 //    case left
+}
+
+enum ToastRoundness{
+    case none
+    case low
+    case mid
+    case high
 }
