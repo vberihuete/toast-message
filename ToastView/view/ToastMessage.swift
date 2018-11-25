@@ -106,8 +106,8 @@ class ToastMessage: UIView {
         let distance: CGFloat = 60
         layer.masksToBounds = true
         translatesAutoresizingMaskIntoConstraints = false
-        leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+        leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.safeAreaInsets.left + 10).isActive = true
+        trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: (view.safeAreaInsets.right + 10) * -1).isActive = true
         self.toastPlace = toastPlace
         if toastPlace == .down{
             bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: (view.safeAreaInsets.bottom + distance) * -1).isActive = true
