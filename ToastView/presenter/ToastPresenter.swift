@@ -17,28 +17,21 @@ class ToastPresenter {
     
     private var currentToast: ToastMessage?
     
-    func show(in view: UIView, message: String, icon: UIImage? = nil, with size: (width: CGFloat, height: CGFloat) = (200, 50), place toastPlace: ToastPlace = .down, animated: Bool = true, backgroundColor: UIColor = .black, timeOut: Double? = nil){
+    func show(in view: UIView, message: String, place toastPlace: ToastPlace = .down, backgroundColor: UIColor = .black, textColor: UIColor = .white, timeOut: Double? = nil, roundness: ToastRoundness = .mid){
 
-        let toast = ToastMessage(backgroundColor: backgroundColor, message: message, icon: icon, timeOut: timeOut)
-        toast.alpha = animated ? 0 : 1
-//        toast.tag = toasts.count
-//        toasts.append(toast)
+        let toast = ToastMessage(backgroundColor: backgroundColor, message: message, timeOut: timeOut, textColor: textColor, roundness: roundness)
+        toast.alpha = 0
         if let currentToast = currentToast{
             currentToast.dismiss {
-                self.add(toast, to: view, animated: animated)
-                toast.constraint(in: view, place: toastPlace, with: size)
+                self.add(toast, to: view)
+                toast.constraint(in: view, place: toastPlace)
                 self.slide(up: toast)
             }
         }else{
-            self.add(toast, to: view, animated: animated)
-            toast.constraint(in: view, place: toastPlace, with: size)
+            self.add(toast, to: view)
+            toast.constraint(in: view, place: toastPlace)
             slide(up: toast)
         }
-        
-//        toast.widthAnchor.constraint(equalToConstant: size.width).isActive = true
-//        toast.heightAnchor.constraint(equalToConstant: size.height).isActive = true
-//        toast.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        toast.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: size.height * -1).isActive = true
     }
     
     
@@ -49,15 +42,9 @@ class ToastPresenter {
         
     }
     
-    private func add(_ toast: ToastMessage, to view: UIView, animated: Bool){
+    private func add(_ toast: ToastMessage, to view: UIView){
         self.currentToast = toast
         view.addSubview(toast)
-        
-//        if animated {
-//            UIView.animate(withDuration: 0.2) {
-//                toast.alpha = 1
-//            }
-//        }
     }
     
     private func slide(up view: UIView){
@@ -75,9 +62,10 @@ enum ToastPlace{
 //    case left
 }
 
-enum ToastRoundness{
-    case none
-    case low
-    case mid
-    case high
+enum ToastRoundness: CGFloat{
+    case none = 1
+    case low = 20
+    case mid = 10
+    case high = 8
+    
 }

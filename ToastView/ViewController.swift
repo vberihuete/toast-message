@@ -20,10 +20,10 @@ class ViewController: UIViewController {
     @IBAction func showLeftAction(_ sender: Any) {
     }
     @IBAction func showDownAction(_ sender: Any) {
-        ToastPresenter.shared.show(in: self.view, message: "This is a toast!", timeOut: 4)
+        ToastPresenter.shared.show(in: self.view, message: "This is a toast with a really long text in order to see how it behaves which should work... for real!!!!!! yea!", timeOut: 4)
     }
     @IBAction func showUpAction(_ sender: Any) {
-        ToastPresenter.shared.show(in: view, message: "From up", place: .up)
+        ToastPresenter.shared.show(in: view, message: "From up", place: .up, textColor: .yellow, roundness: .none)
     }
 }
 

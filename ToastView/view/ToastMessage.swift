@@ -12,14 +12,17 @@ class ToastMessage: UIView {
 
     @IBOutlet var containerView: UIView!
     
-    @IBOutlet weak var imageView: UIImageView!
-    
     @IBOutlet weak var messageLabel: UILabel!
     
+    @IBOutlet weak var contentView: UIView!
+    
     var color = UIColor.black
+    var textColor = UIColor.white
     var message: String?
-    var iconImage: UIImage?
     var timeOut: Double?
+    var toastPlace: ToastPlace = .down
+    var roundness: ToastRoundness = .mid
+    
     
     private var touchDismiss = true
     
@@ -29,17 +32,18 @@ class ToastMessage: UIView {
     }
     
     required init?(coder aDecoder: NSCoder) {
-//        setup()
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        setup()
         
     }
     
-    init(backgroundColor color: UIColor = .black, message: String, icon: UIImage?, timeOut: Double? = nil) {
+    init(backgroundColor color: UIColor = .black, message: String, timeOut: Double? = nil, textColor: UIColor, roundness: ToastRoundness = .mid) {
         super.init(frame: CGRect.zero)
         self.color = color
         self.message = message
-        self.iconImage = icon
         self.timeOut = timeOut
+        self.textColor = textColor
+        self.roundness = roundness
         setup()
     }
     
@@ -52,8 +56,9 @@ class ToastMessage: UIView {
         containerView.frame = self.bounds
         containerView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         //set
-        containerView.backgroundColor = color
+        contentView.backgroundColor = color
         messageLabel.text = message
+        messageLabel.textColor = textColor
         
         if let timeOut = self.timeOut{
             DispatchQueue.main.asyncAfter(deadline: .now() + timeOut) { [weak self] in
@@ -63,12 +68,6 @@ class ToastMessage: UIView {
                 ToastPresenter.shared.remove()
             }
         }
-        
-        guard let image = iconImage else {
-            imageView.isHidden = true
-            return
-        }
-        imageView.image = image
     }
     
     /// Dismiss the current toast message
@@ -88,6 +87,14 @@ class ToastMessage: UIView {
         })
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        guard roundness != .none else {
+            return
+        }
+        contentView.layer.masksToBounds = true
+        contentView.layer.cornerRadius = contentView.frame.height / roundness.rawValue
+    }
     
     /// Assigns auto layout anchor constraints with the given parameters based on the toast place
     ///
@@ -95,19 +102,18 @@ class ToastMessage: UIView {
     ///   - view: The view to constraint against
     ///   - toastPlace: the place where the toast is being constrained
     ///   - size: the size of the desired constraints
-    func constraint(in view: UIView, place toastPlace: ToastPlace, with size: (width: CGFloat, height: CGFloat)){
+    func constraint(in view: UIView, place toastPlace: ToastPlace){
+        let distance: CGFloat = 60
         layer.masksToBounds = true
-        layer.cornerRadius = size.width / 8
         translatesAutoresizingMaskIntoConstraints = false
-        widthAnchor.constraint(equalToConstant: size.width).isActive = true
-        heightAnchor.constraint(equalToConstant: size.height).isActive = true
-        centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+        self.toastPlace = toastPlace
         if toastPlace == .down{
-            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: size.height * -1).isActive = true
+            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: (view.safeAreaInsets.bottom + distance) * -1).isActive = true
         }else if toastPlace == .up{
-            topAnchor.constraint(equalTo: view.topAnchor, constant: size.height).isActive = true
+            topAnchor.constraint(equalTo: view.topAnchor, constant: view.safeAreaInsets.top + distance).isActive = true
         }
-        
     }
     
     /// Touches began function
